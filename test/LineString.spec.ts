@@ -10,6 +10,7 @@ describe("test LineString", () => {
         expect(ls.getPointN(1)).to.equal(undefined);
         expect(ls.getPointN(-1)).to.equal(undefined);
         expect(ls.getType()).to.equal("LineString");
+        expect(ls.isEmpty()).to.equal(true);
     });
     it("test constructor with coordinates", () => {
         const p1 = new Point([3.0,4.0]);
@@ -18,12 +19,12 @@ describe("test LineString", () => {
         expect(ls.getNumPoints()).to.equal(2);
         expect(ls.getPointN(0)).to.equal(p1);
         expect(ls.getPointN(1)).to.equal(p2);
+        expect(ls.isEmpty()).to.equal(false);
     });
-    it("should return undefined for single coordinate", () => {
-        const p1 = new Point([3.0,4.0]);
-        const ls = new LineString([p1]);
+    it("test constructor with empty point list", () => {
+        const ls = new LineString([]);
         expect(ls.getNumPoints()).to.equal(0);
-        expect(ls.getPointN(0)).to.equal(undefined);
+        expect(ls.isEmpty()).to.equal(true);
     });
 });
 
