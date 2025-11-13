@@ -23,9 +23,19 @@ export default class LineString implements Geometry{
   isEmpty(): boolean {
       return this.points.length == 0;
   }
+
   translate(dx: number, dy: number) {
     for (let point of this.points){
         point.translate(dx, dy);
     }
-}
+  }
+
+  clone(): LineString {
+    const clone = new LineString();
+    for (let point of this.points){
+        clone.points.push(point.clone());
+        
+    }
+    return clone;
+  }
 }

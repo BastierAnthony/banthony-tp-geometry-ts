@@ -38,5 +38,15 @@ describe("test LineString", () => {
             expect(ls.getPointN(1).x()).to.equal(3);
             expect(ls.getPointN(1).y()).to.equal(0);
         });
+    it("test cloning construct", () => {
+            const p1 = new Point([3.0,4.0]);
+            const p2 = new Point([1.0,2.0]);
+            const ls1 = new LineString([p1, p2]);
+            const ls2 = ls1.clone();
+            expect(ls1.getPointN(0).x()).to.equal(ls2.getPointN(0).x());
+            expect(ls1.getPointN(0).y()).to.equal(ls2.getPointN(0).y());
+            expect(ls1.getPointN(1).x()).to.equal(ls2.getPointN(1).x());
+            expect(ls1.getPointN(1).y()).to.equal(ls2.getPointN(1).y());
+        });
 });
 
