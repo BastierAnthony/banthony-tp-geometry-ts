@@ -41,6 +41,12 @@ describe("test Point", () => {
         expect(p2.getType()).to.equal("Point");
         expect(p2.isEmpty()).to.equal(false);
     });
+    it("test cloning empty point", () => {
+        const p1 = new Point();
+        const p2 = p1.clone();
+        expect(p1.getCoordinate()).to.deep.equal(p2.getCoordinate());
+        expect(p2.isEmpty()).to.equal(true);
+    });
     it("test cloning translation", () => {
         const p1 = new Point([3.0,4.0]);
         const p2 = p1.clone();
