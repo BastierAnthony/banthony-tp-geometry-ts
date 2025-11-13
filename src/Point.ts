@@ -1,6 +1,7 @@
 import Coordinate from "./Coordinate";
+import Geometry from "./Geometry";
 
-export default class Point {
+export default class Point implements Geometry {
   private coordinate?: Coordinate;
 
   constructor(coordinate?: Coordinate) {
@@ -19,4 +20,7 @@ export default class Point {
     return this.coordinate ? this.coordinate[1] : Number.NaN ;
   }
 
+  getType(): string {
+    return "Point";
+  }
 }
