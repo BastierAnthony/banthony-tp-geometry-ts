@@ -70,7 +70,7 @@ describe("test Point", () => {
         });
         const p = new Point();
         p.accept(v);
-        expect(result).to.equal("Je suis un point vide.")
+        expect(result).to.equal("Je suis un point vide.");
     });
     it("should return Je suis un point avec x=2.0 et y=3.0.", ()=> {
         let result = "";
@@ -79,7 +79,7 @@ describe("test Point", () => {
         });
         const p = new Point([2.0,3.0]);
         p.accept(v);
-        expect(result).to.equal("Je suis un point avec x=2.0 et y=3.0.")
+        expect(result).to.equal("Je suis un point avec x=2.0 et y=3.0.");
     });
 
     it("test WktVisitor: should work with empty point ", () => {
@@ -87,7 +87,7 @@ describe("test Point", () => {
         const p = new Point();
         p.accept(v);
         const result = v.getResult();
-        expect(result).to.equal("POINT EMPTY")
+        expect(result).to.equal("POINT EMPTY");
     });
 
     it("test WktVisitor: should work with non empty point ", () => {
@@ -95,19 +95,19 @@ describe("test Point", () => {
         const p = new Point([3.0,4.0]);
         p.accept(v);
         const result = v.getResult();
-        expect(result).to.equal("POINT(3.0 4.0)")
+        expect(result).to.equal("POINT(3.0 4.0)");
     });
 
     it("test asText with empty point", () => {
         const p = new Point();
         const result = p.asText();
-        expect(result).to.equal("POINT EMPTY")
+        expect(result).to.equal("POINT EMPTY");
     });
 
     it("test asText with non empty point", () => {
         const p = new Point([3.0,4.0]);
         const result = p.asText();
-        expect(result).to.equal("POINT(3.0 4.0)")
+        expect(result).to.equal("POINT(3.0 4.0)");
     });
 });
 
