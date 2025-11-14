@@ -4,7 +4,7 @@ import GeometryVisitor from "./GeometryVisitor";
 
 export default class GeometryWithCachedEnvelope implements Geometry {
     private original: Geometry;
-    private cachedEnvelope: Envelope;
+    private cachedEnvelope?: Envelope | undefined;
 
     constructor(original:Geometry){
         this.original = original;
@@ -19,11 +19,15 @@ export default class GeometryWithCachedEnvelope implements Geometry {
     }
 
     translate(dx: number, dy: number) {
-        this.original.translate(dx, dy);
+        const gt = this.original.translate(dx, dy);
+        this.cachedEnvelope = undefined;
+        return gt
     }
 
-    clone(): Geometry {
-        return this.original.clone();
+    clone(): GeometryWithCachedEnvelope {
+        const gc = new GeometryWithCachedEnvelope(this.original.clone());
+        gc.cachedEnvelope = this.getEnvelope();
+        return gc;
     }
 
     accept(visitor: GeometryVisitor) {

@@ -40,7 +40,7 @@ describe("test LineString", () => {
             expect(ls.getPointN(0).y()).to.equal(2);
             expect(ls.getPointN(1).x()).to.equal(3);
             expect(ls.getPointN(1).y()).to.equal(0);
-        });
+    });
     it("test cloning construct", () => {
             const p1 = new Point([3.0,4.0]);
             const p2 = new Point([1.0,2.0]);
@@ -50,7 +50,7 @@ describe("test LineString", () => {
             expect(ls1.getPointN(0).y()).to.equal(ls2.getPointN(0).y());
             expect(ls1.getPointN(1).x()).to.equal(ls2.getPointN(1).x());
             expect(ls1.getPointN(1).y()).to.equal(ls2.getPointN(1).y());
-        });
+    });
 
 
     it("test envelope builder", () => {
@@ -109,7 +109,7 @@ describe("test LineString", () => {
         expect(result).to.equal("LINESTRING EMPTY")
     });
     
-    it("test asText with non empty point", () => {
+    it("test asText with non empty linestring", () => {
         const p1 = new Point([3.0,4.0]);
         const p2 = new Point([1.0,2.0]);
         const ls = new LineString([p1, p2]);
@@ -117,7 +117,7 @@ describe("test LineString", () => {
         expect(result).to.equal("LINESTRING(3.0 4.0, 1.0 2.0)")
     });
 
-    it("test cached envelope", () => {
+    it("test cached envelope creation", () => {
         const p1 = new Point([0.0,1.0]);
         const p2 = new Point([2.0,0.0]);
         const p3 = new Point([1.0,3.0]);
@@ -127,6 +127,26 @@ describe("test LineString", () => {
         expect(a.toString()).to.equal("[0,0,2,3]");
         const b = g.getEnvelope();
         expect(a).to.equal(b);
+    });
+
+    it("test cached envelope methods", () => {
+        const p1 = new Point([0.0,1.0]);
+        const p2 = new Point([2.0,0.0]);
+        const p3 = new Point([1.0,3.0]);
+        const ls = new LineString([p1, p2, p3]);
+        let g = new GeometryWithCachedEnvelope(ls);
+        const a = g.getEnvelope();
+        expect(a.toString()).to.equal("[0,0,2,3]");
+        expect(g.getType()).to.equal("LineString");
+        expect(g.isEmpty()).to.equal(false);
+        const gt = g.clone();
+        expect(gt).to.deep.equal(g);
+        expect(gt.translate(2,2)).to.deep.equal(g.translate(2,2));
+        expect(gt.asText()).to.equal(g.asText());
+        const v = new WktVisitor();
+        gt.accept(v);
+        const result = v.getResult();
+        expect(result).to.equal("LINESTRING(2.0 3.0, 4.0 2.0, 3.0 5.0)");
     });
 });
 
