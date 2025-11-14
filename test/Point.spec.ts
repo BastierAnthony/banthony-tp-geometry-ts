@@ -4,6 +4,7 @@ import Point from "../src/Point";
 import LogGeometryVisitor from "../src/LogGeometryVisitor";
 import WktVisitor from "../src/WktVisitor";
 import GeometryWithCachedEnvelope from "../src/GeometryWithCachedEnvelope";
+import LengthVisitor from   "../src/LengthVisitor";
 
 describe("test Point", () => {
     it("test default constructor", () => {
@@ -121,20 +122,36 @@ describe("test Point", () => {
     });
 
     it("test cached envelope methods", () => {
-            const p = new Point([0.0,1.0]);
-            let g = new GeometryWithCachedEnvelope(p);
-            const a = g.getEnvelope();
-            expect(a.toString()).to.equal("[0,1,0,1]");
-            expect(g.getType()).to.equal("Point");
-            expect(g.isEmpty()).to.equal(false);
-            const gt = g.clone();
-            expect(gt).to.deep.equal(g);
-            expect(gt.translate(2,2)).to.deep.equal(g.translate(2,2));
-            expect(gt.asText()).to.equal(g.asText());
-            const v = new WktVisitor();
-            gt.accept(v);
-            const result = v.getResult();
-            expect(result).to.equal("POINT(2.0 3.0)");
-        });
+        const p = new Point([0.0,1.0]);
+        let g = new GeometryWithCachedEnvelope(p);
+        const a = g.getEnvelope();
+        expect(a.toString()).to.equal("[0,1,0,1]");
+        expect(g.getType()).to.equal("Point");
+        expect(g.isEmpty()).to.equal(false);
+        const gt = g.clone();
+        expect(gt).to.deep.equal(g);
+        expect(gt.translate(2,2)).to.deep.equal(g.translate(2,2));
+        expect(gt.asText()).to.equal(g.asText());
+        const v = new WktVisitor();
+        gt.accept(v);
+        const result = v.getResult();
+        expect(result).to.equal("POINT(2.0 3.0)");
+    });
+
+    it("test lenVisitor with empty point", () => {
+        const v = new LengthVisitor();
+        const p = new Point();
+        p.accept(v);
+        const result = v.getResult();
+        expect(result).to.equal(0.0);
+    });
+
+    it("test lenVisitor with non empty point", () => {
+        const v = new LengthVisitor();
+        const p = new Point([3.0,4.0]);
+        p.accept(v);
+        const result = v.getResult();
+        expect(result).to.equal(0.0);
+    });
 });
 

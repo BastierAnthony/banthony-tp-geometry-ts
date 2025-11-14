@@ -3,10 +3,10 @@ import GeometryVisitor from "./GeometryVisitor";
 import LineString from "./LineString";
 import Point from "./Point";
 
-export default class WktVisitor implements GeometryVisitor {
+export default class WktVisitor implements GeometryVisitor<string> {
     private buffer : string;
 
-    visitLineString(lineString: LineString) {
+    visitLineString(lineString: LineString): string {
         let wkt = "LINESTRING";
         if (lineString.isEmpty()){
             wkt += " EMPTY";
@@ -25,9 +25,10 @@ export default class WktVisitor implements GeometryVisitor {
             wkt += ")";
         }
         this.buffer =  wkt;
+        return this.buffer;
     };
     
-    visitPoint(point: Point) {
+    visitPoint(point: Point): string{
         let wkt = "POINT";
         if (point.isEmpty()){
             wkt += " EMPTY";
@@ -39,9 +40,10 @@ export default class WktVisitor implements GeometryVisitor {
             wkt += ")";
         } 
         this.buffer =  wkt;
+        return this.buffer;
     };
 
-    visitGeometryCollection(geometryCollection: GeometryCollection) {
+    visitGeometryCollection(geometryCollection: GeometryCollection): string {
         let wkt = "GEOMETRYCOLLECTION";
         if (geometryCollection.isEmpty()){
             wkt += " EMPTY";
@@ -60,6 +62,7 @@ export default class WktVisitor implements GeometryVisitor {
             wkt += ")";
         } 
         this.buffer = wkt;
+        return this.buffer;
     }
     
     getResult() : string{

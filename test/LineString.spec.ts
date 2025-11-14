@@ -5,6 +5,7 @@ import LineString from "../src/LineString";
 import LogGeometryVisitor from "../src/LogGeometryVisitor";
 import WktVisitor from "../src/WktVisitor";
 import GeometryWithCachedEnvelope from "../src/GeometryWithCachedEnvelope";
+import LengthVisitor from   "../src/LengthVisitor";
 
 describe("test LineString", () => {
     it("test default constructor", () => {
@@ -148,5 +149,23 @@ describe("test LineString", () => {
         const result = v.getResult();
         expect(result).to.equal("LINESTRING(2.0 3.0, 4.0 2.0, 3.0 5.0)");
     });
+
+    // it("test lenVisitor with empty linestring", () => {
+    //         const v = new LengthVisitor();
+    //         const p = new LineString();
+    //         p.accept(v);
+    //         const result = v.getResult();
+    //         expect(result).to.equal(0.0);
+    // });
+
+    // it("test lenVisitor with non empty linestring", () => {
+    //     const v = new LengthVisitor();
+    //     const p1 = new Point([3.0,4.0]);
+    //     const p2 = new Point([1.0,2.0]);
+    //     const ls = new LineString([p1, p2]);
+    //     ls.accept(v);
+    //     const result = v.getResult();
+    //     expect(result).to.equal(0.0);
+    // });
 });
 

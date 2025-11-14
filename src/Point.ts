@@ -41,7 +41,7 @@ export default class Point extends AbstractGeometry {
     return this.isEmpty() ? new Point() : new Point([this.x(), this.y()]);
   }
 
-  accept(visitor: GeometryVisitor) {
-    visitor.visitPoint(this);
+  accept<T>(visitor:GeometryVisitor<T>): T {
+    return visitor.visitPoint(this);
   }
 }
