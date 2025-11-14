@@ -2,6 +2,7 @@ import "mocha";
 import { expect } from "chai";
 import Point from "../src/Point";
 import LineString from "../src/LineString";
+import LogGeometryVisitor from "../src/LogGeometryVisitor";
 
 describe("test LineString", () => {
     it("test default constructor", () => {
@@ -58,6 +59,29 @@ describe("test LineString", () => {
         const e = ls.getEnvelope();
         expect(e.toString()).to.equal("[0,0,2,3]"); 
     });
-    
+
+    it("should work with empty polylign ", () => {
+        let result = "";
+        const v = new LogGeometryVisitor((message)=>{
+            result = message;
+        });
+        const ls = new LineString();
+        ls.accept(v);
+        expect(result).to.equal("Je suis une polyligne vide.")
+    });
+
+    it("should work with non empty polylign ", () => {
+        let result = "";
+        const v = new LogGeometryVisitor((message)=>{
+            result = message;
+        });
+        const p1 = new Point([0.0,1.0]);
+        const p2 = new Point([2.0,0.0]);
+        const p3 = new Point([1.0,3.0]);
+        const ls = new LineString([p1, p2, p3]);
+        ls.accept(v);
+        expect(result).to.equal("Je suis une polyligne définie par 3 point(s).")
+    });
+
 });
 

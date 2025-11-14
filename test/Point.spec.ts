@@ -1,6 +1,7 @@
 import "mocha";
 import { expect } from "chai";
 import Point from "../src/Point";
+import LogGeometryVisitor from "../src/LogGeometryVisitor";
 
 describe("test Point", () => {
     it("test default constructor", () => {
@@ -60,6 +61,24 @@ describe("test Point", () => {
         const p1 = new Point([1.0,1.0]);
         const e = p1.getEnvelope();
         expect(e.toString()).to.equal("[1,1,1,1]"); 
+    });
+    it("should return Je suis un point vide. ", ()=> {
+        let result = "";
+        const v = new LogGeometryVisitor((message)=>{
+            result = message;
+        });
+        const p = new Point();
+        p.accept(v);
+        expect(result).to.equal("Je suis un point vide.")
+    });
+    it("should return Je suis un point avec x=2.0 et y=3.0.", ()=> {
+        let result = "";
+        const v = new LogGeometryVisitor((message)=>{
+            result = message;
+        });
+        const p = new Point([2.0,3.0]);
+        p.accept(v);
+        expect(result).to.equal("Je suis un point avec x=2.0 et y=3.0.")
     });
 });
 
