@@ -3,6 +3,7 @@ import { expect } from "chai";
 import Point from "../src/Point";
 import LogGeometryVisitor from "../src/LogGeometryVisitor";
 import WktVisitor from "../src/WktVisitor";
+import GeometryWithCachedEnvelope from "../src/GeometryWithCachedEnvelope";
 
 describe("test Point", () => {
     it("test default constructor", () => {
@@ -108,6 +109,15 @@ describe("test Point", () => {
         const p = new Point([3.0,4.0]);
         const result = p.asText();
         expect(result).to.equal("POINT(3.0 4.0)");
+    });
+
+    it("test cached envelope", () => {
+        const p = new Point([1.0,1.0]);
+        let g = new GeometryWithCachedEnvelope(p);
+        const a = g.getEnvelope();
+        expect(a.toString()).to.equal("[1,1,1,1]");
+        const b = g.getEnvelope();
+        expect(a).to.equal(b);
     });
 });
 

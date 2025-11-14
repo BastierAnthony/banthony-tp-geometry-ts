@@ -4,6 +4,7 @@ import Point from "../src/Point";
 import LineString from "../src/LineString";
 import LogGeometryVisitor from "../src/LogGeometryVisitor";
 import WktVisitor from "../src/WktVisitor";
+import GeometryWithCachedEnvelope from "../src/GeometryWithCachedEnvelope";
 
 describe("test LineString", () => {
     it("test default constructor", () => {
@@ -116,5 +117,16 @@ describe("test LineString", () => {
         expect(result).to.equal("LINESTRING(3.0 4.0, 1.0 2.0)")
     });
 
+    it("test cached envelope", () => {
+        const p1 = new Point([0.0,1.0]);
+        const p2 = new Point([2.0,0.0]);
+        const p3 = new Point([1.0,3.0]);
+        const ls = new LineString([p1, p2, p3]);
+        let g = new GeometryWithCachedEnvelope(ls);
+        const a = g.getEnvelope();
+        expect(a.toString()).to.equal("[0,0,2,3]");
+        const b = g.getEnvelope();
+        expect(a).to.equal(b);
+    });
 });
 
