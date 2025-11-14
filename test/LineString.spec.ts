@@ -48,5 +48,16 @@ describe("test LineString", () => {
             expect(ls1.getPointN(1).x()).to.equal(ls2.getPointN(1).x());
             expect(ls1.getPointN(1).y()).to.equal(ls2.getPointN(1).y());
         });
+
+
+    it("test envelope builder", () => {
+        const p1 = new Point([0.0,1.0]);
+        const p2 = new Point([2.0,0.0]);
+        const p3 = new Point([1.0,3.0]);
+        const ls = new LineString([p1, p2, p3]);
+        const e = ls.getEnvelope();
+        expect(e.toString()).to.equal("[0,0,2,3]"); 
+    });
+    
 });
 

@@ -56,5 +56,10 @@ describe("test Point", () => {
         p2.translate(dx,dy);
         expect(p1.getCoordinate()).not.to.deep.equal(p2.getCoordinate());
     });
+    it("test envelope builder", () => {
+        const p1 = new Point([1.0,1.0]);
+        const e = p1.getEnvelope();
+        expect(e.toString()).to.equal("[1,1,1,1]"); 
+    });
 });
 
