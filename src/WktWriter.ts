@@ -1,9 +1,9 @@
-import Geometry from "./Geometry";
+import AbstractGeometry from "./AbstractGeometry";
 import Point from "./Point";
 import LineString from "./LineString";
 
 export default class WktWriter {
-    write(geometry: Geometry): string{
+    write(geometry: AbstractGeometry): string{
         let wkt = "";
         if ( geometry instanceof Point ){
             wkt += "POINT";

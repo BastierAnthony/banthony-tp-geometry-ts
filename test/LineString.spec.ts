@@ -102,5 +102,19 @@ describe("test LineString", () => {
         expect(result).to.equal("LINESTRING(3.0 4.0, 1.0 2.0)")
     });
 
+    it("test asText with empty linestring", () => {
+        const ls = new LineString();
+        const result = ls.asText();
+        expect(result).to.equal("LINESTRING EMPTY")
+    });
+    
+    it("test asText with non empty point", () => {
+        const p1 = new Point([3.0,4.0]);
+        const p2 = new Point([1.0,2.0]);
+        const ls = new LineString([p1, p2]);
+        const result = ls.asText();
+        expect(result).to.equal("LINESTRING(3.0 4.0, 1.0 2.0)")
+    });
+
 });
 

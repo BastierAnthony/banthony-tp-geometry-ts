@@ -90,7 +90,7 @@ describe("test Point", () => {
         expect(result).to.equal("POINT EMPTY")
     });
 
-    it("test WktVisitor: should work with non empty linestring ", () => {
+    it("test WktVisitor: should work with non empty point ", () => {
         const v = new WktVisitor();
         const p = new Point([3.0,4.0]);
         p.accept(v);
@@ -98,5 +98,16 @@ describe("test Point", () => {
         expect(result).to.equal("POINT(3.0 4.0)")
     });
 
+    it("test asText with empty point", () => {
+        const p = new Point();
+        const result = p.asText();
+        expect(result).to.equal("POINT EMPTY")
+    });
+
+    it("test asText with non empty point", () => {
+        const p = new Point([3.0,4.0]);
+        const result = p.asText();
+        expect(result).to.equal("POINT(3.0 4.0)")
+    });
 });
 
