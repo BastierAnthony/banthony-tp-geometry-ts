@@ -2,6 +2,7 @@ import "mocha";
 import { expect } from "chai";
 import Point from "../src/Point";
 import LogGeometryVisitor from "../src/LogGeometryVisitor";
+import WktVisitor from "../src/WktVisitor";
 
 describe("test Point", () => {
     it("test default constructor", () => {
@@ -80,5 +81,22 @@ describe("test Point", () => {
         p.accept(v);
         expect(result).to.equal("Je suis un point avec x=2.0 et y=3.0.")
     });
+
+    it("test WktVisitor: should work with empty point ", () => {
+        const v = new WktVisitor();
+        const p = new Point();
+        p.accept(v);
+        const result = v.getResult();
+        expect(result).to.equal("POINT EMPTY")
+    });
+
+    it("test WktVisitor: should work with non empty linestring ", () => {
+        const v = new WktVisitor();
+        const p = new Point([3.0,4.0]);
+        p.accept(v);
+        const result = v.getResult();
+        expect(result).to.equal("POINT(3.0 4.0)")
+    });
+
 });
 
