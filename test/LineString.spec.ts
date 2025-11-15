@@ -150,22 +150,22 @@ describe("test LineString", () => {
         expect(result).to.equal("LINESTRING(2.0 3.0, 4.0 2.0, 3.0 5.0)");
     });
 
-    // it("test lenVisitor with empty linestring", () => {
-    //         const v = new LengthVisitor();
-    //         const p = new LineString();
-    //         p.accept(v);
-    //         const result = v.getResult();
-    //         expect(result).to.equal(0.0);
-    // });
+    it("test lenVisitor with empty linestring", () => {
+            const v = new LengthVisitor();
+            const p = new LineString();
+            p.accept(v);
+            const result = v.getResult();
+            expect(result).to.equal(0.0);
+    });
 
-    // it("test lenVisitor with non empty linestring", () => {
-    //     const v = new LengthVisitor();
-    //     const p1 = new Point([3.0,4.0]);
-    //     const p2 = new Point([1.0,2.0]);
-    //     const ls = new LineString([p1, p2]);
-    //     ls.accept(v);
-    //     const result = v.getResult();
-    //     expect(result).to.equal(0.0);
-    // });
+    it("test lenVisitor with non empty linestring", () => {
+        const v = new LengthVisitor();
+        const p1 = new Point([0.0,1.0]);
+        const p2 = new Point([1.0,1.0]);
+        const ls = new LineString([p1, p2]);
+        ls.accept(v);
+        const result = v.getResult();
+        expect(result).to.equal(1.0);
+    });
 });
 

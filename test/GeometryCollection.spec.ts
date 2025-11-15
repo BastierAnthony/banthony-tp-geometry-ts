@@ -5,6 +5,7 @@ import Point from "../src/Point";
 import LineString from "../src/LineString";
 import GeometryWithCachedEnvelope from "../src/GeometryWithCachedEnvelope";
 import LogGeometryVisitor from "../src/LogGeometryVisitor";
+import LengthVisitor from   "../src/LengthVisitor";
 
 describe("test GeometryCollection", () => {
     it("test default constructor", () => {
@@ -119,5 +120,30 @@ describe("test GeometryCollection", () => {
         const gc = new GeometryCollection([p1, ls]);
         gc.accept(v);
         expect(result).to.equal("Je suis une geometry collection composée de 2 géométrie(s).");
+    });
+
+
+    it("test lenVisitor with empty geometrycollection", () => {
+            const v = new LengthVisitor();
+            const gc = new GeometryCollection();
+            gc.accept(v);
+            const result = v.getResult();
+            expect(result).to.equal(0.0);
+    });
+
+    it("test lenVisitor with non empty geometrycollection", () => {
+        const v = new LengthVisitor();
+        const p1 = new Point([0.0,1.0]);
+        const p2 = new Point([1.0,1.0]);
+        const p3 = new Point([1.0,2.0]);
+        const p4 = new Point([5.0,2.0]);
+        const ls1 = new LineString([p2, p3, p4]);
+        const p5 = new Point([0.0,1.0]);
+        const p6 = new Point([1.0,1.0]);
+        const ls2 = new LineString([p1, p2]);
+        const gc = new GeometryCollection([p1, ls1, ls2]);
+        gc.accept(v);
+        const result = v.getResult();
+        expect(result).to.equal(6.0);
     });
 });
